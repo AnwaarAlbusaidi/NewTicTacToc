@@ -12,9 +12,6 @@ public class Symbol {
         Symbol symbol = (Symbol) obj;
         return this.playerSymbol == symbol.playerSymbol;
     }
-    public Symbol(char playerSymbol){
-        this.playerSymbol = playerSymbol;
-    }
 
     public Symbol(){
         this.playerSymbol = playerSymbol;

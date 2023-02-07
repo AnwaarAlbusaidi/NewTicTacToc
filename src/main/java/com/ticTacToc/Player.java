@@ -10,16 +10,6 @@ public class Player {
         this.playerSymbol = playerSymbol;
     }
 
-    public void setName(String newName)
-    {
-        this.name = newName;
-    }
-
-    public void setSymbol(Symbol playerSymbol)
-    {
-        this.playerSymbol = playerSymbol;
-    }
-
     public String getName() {
         return this.name;
     }

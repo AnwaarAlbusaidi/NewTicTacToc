@@ -1,37 +1,38 @@
 package com.ticTacToc;
-import com.google.gson.Gson;
-import java.io.*;
 import java.util.Scanner;
 
 public class Board {
+    /**
+     The grid representing the Tic Tac Toe board.
+     */
     private Symbol[][] grid;
+    /**
+     The size of the Tic Tac Toe board.
+     */
     private int size;
+    /**
+     An object of UserInputHandler class to get user input.
+     */
     UserInputHandler inputManger = new UserInputHandler();
+
     public Board(){
-
     }
-
+    /**
+     Constructor to initialize the grid and size of the Tic Tac Toe board.
+     @param grid the Tic Tac Toe grid
+     @param size the size of the grid
+     */
     public Board(Symbol[][] grid, int size) {
         this.grid = grid;
         this.size = size;
     }
-
-    public Board(Symbol[][] grid) {
-        this.grid = grid;
-    }
-
-    public void setGrid(Symbol[][] grid) {
-        this.grid = grid;
-    }
-
-    public int getSize() {
-        return size;
-    }
-
     public Symbol[][] getGrid() {
         return grid;
     }
-
+    /**
+     Constructor for Board class
+     @param size an integer that represents the size of the board
+     */
     public Board(int size) {
         this.size = size;
         grid = new Symbol[size][size];
@@ -41,30 +42,9 @@ public class Board {
             }
         }
     }
-
-
-//    public void saveBoardToFile() {
-//        Gson gson = new Gson();
-//        String json = gson.toJson(grid);
-//        try (FileWriter writer = new FileWriter("grid.json")) {
-//            writer.write(json);
-//        } catch (IOException e) {
-//            e.printStackTrace();
-//        }
-//    }
-//
-//    public void readBoardFromFile() {
-//        Gson gson = new Gson();
-//        try (Reader reader = new FileReader("grid.json")) {
-//            Symbol[][] newGrid = gson.fromJson(reader, Symbol[][].class);
-//            setGrid(newGrid);
-//        } catch (FileNotFoundException e) {
-//            System.out.println("The specified file does not exist: " + "grid.json");
-//        } catch (IOException e) {
-//            System.out.println("An error occurred while reading from the file: " + "grid.json");
-//        }
-//    }
-
+    /**
+     Displays the Tic Tac Toe board
+     */
     public void displayBoard() {
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
@@ -73,7 +53,13 @@ public class Board {
             System.out.println();
         }
     }
-
+    /**
+     The method allows a player to place their symbol on the game grid.
+     The player is prompted to enter the row and column where they want to place their symbol.
+     If the input is invalid or if the chosen location is already occupied, the player is prompted again.
+     If the player enters "q", the game is exited.
+     @param player the current player
+     */
     public void putToGrid(Player player) {
         Scanner sc = new Scanner(System.in);
         String input;
@@ -115,7 +101,11 @@ public class Board {
         } else
             return false;
     }
-
+    /**
+     This method checks for the winner of the tic-tac-toe game.
+     It checks the rows, columns, and diagonals of the grid to see if a winning pattern has been formed.
+     @return the winning symbol of the player. If there is no winner, it returns 'D' for draw.
+     */
     public char hasWinner() {
         //Symbol d = new Symbol('D');
         for (int i = 0; i < 3; i++) // to check the row
@@ -138,6 +128,12 @@ public class Board {
         return 'D';
     }
 
+    /**
+     Checks if the grid is full of symbols.
+     @param player1 the first player
+     @param player2 the second player
+     @return true if the grid is full of symbols, false otherwise
+     */
     public boolean isFullOfSymbols(Player player1, Player player2) {
         char player1Symbol = player1.playerSymbol.getPlayerSymbol();
         char player2Symbol = player2.playerSymbol.getPlayerSymbol();

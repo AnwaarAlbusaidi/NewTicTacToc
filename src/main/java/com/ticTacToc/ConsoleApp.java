@@ -5,11 +5,13 @@ import java.util.Scanner;
 
 public class ConsoleApp {
     public static void main(String[] args) {
-
+        // Initialize the game board with a grid of 3x3
         Board board = new Board(3);
         Scanner sc = new Scanner(System.in);
         boolean playGame = true;
+        // Initialize the state manager to save and load game state
         StateManager appManager = new StateManager();
+        // Initialize the User Input Handler to check the user input
         UserInputHandler inputManager = new UserInputHandler();
 
         // get player 1 information
@@ -45,6 +47,7 @@ public class ConsoleApp {
         System.out.println(" press 1 for resume game and 2 for new the game: ");
         int userInput = Integer.parseInt(sc.nextLine());
      if(userInput == 1) {
+         // Load saved game state
          System.out.println("Current Board:");
          Player[] players = appManager.readFromJsonFile();
          System.out.println("Player 1 name: " + players[0].name);
