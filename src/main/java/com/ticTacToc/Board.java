@@ -1,12 +1,36 @@
 package com.ticTacToc;
-
+import com.google.gson.Gson;
 import java.io.*;
 import java.util.Scanner;
-import com.google.gson.Gson;
 
 public class Board {
     private Symbol[][] grid;
     private int size;
+    UserInputHandler inputManger = new UserInputHandler();
+    public Board(){
+
+    }
+
+    public Board(Symbol[][] grid, int size) {
+        this.grid = grid;
+        this.size = size;
+    }
+
+    public Board(Symbol[][] grid) {
+        this.grid = grid;
+    }
+
+    public void setGrid(Symbol[][] grid) {
+        this.grid = grid;
+    }
+
+    public int getSize() {
+        return size;
+    }
+
+    public Symbol[][] getGrid() {
+        return grid;
+    }
 
     public Board(int size) {
         this.size = size;
@@ -17,6 +41,29 @@ public class Board {
             }
         }
     }
+
+
+//    public void saveBoardToFile() {
+//        Gson gson = new Gson();
+//        String json = gson.toJson(grid);
+//        try (FileWriter writer = new FileWriter("grid.json")) {
+//            writer.write(json);
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
+//    }
+//
+//    public void readBoardFromFile() {
+//        Gson gson = new Gson();
+//        try (Reader reader = new FileReader("grid.json")) {
+//            Symbol[][] newGrid = gson.fromJson(reader, Symbol[][].class);
+//            setGrid(newGrid);
+//        } catch (FileNotFoundException e) {
+//            System.out.println("The specified file does not exist: " + "grid.json");
+//        } catch (IOException e) {
+//            System.out.println("An error occurred while reading from the file: " + "grid.json");
+//        }
+//    }
 
     public void displayBoard() {
         for (int row = 0; row < size; row++) {
@@ -29,23 +76,37 @@ public class Board {
 
     public void putToGrid(Player player) {
         Scanner sc = new Scanner(System.in);
-        int row;
-        int col;
-        System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") to place your symbol " + player.playerSymbol.getPlayerSymbol());
-        System.out.print("Row: ");
-        row = sc.nextInt();
-        System.out.print("Column: ");
-        col = sc.nextInt();
-        if (check(grid[row][col]) == true) {
-            System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") to place your symbol " + player.playerSymbol.getPlayerSymbol());
-            System.out.print("Row: ");
-            row = sc.nextInt();
-            System.out.print("Column: ");
-            col = sc.nextInt();
-            grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
-        } else
-            grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
+        String input;
+        int row, col;
+        System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") separated by space or 'q' to quit: " + player.playerSymbol.getPlayerSymbol());
+        input =  inputManger.getUserChoiceString();
+        //input = sc.nextLine();
+        if (input.equals("q")) {
+            System.out.println("Player " + player.name + " has exited the game");
+            System.exit(0);
+        }
+        try {
+            String[] inputArray = input.split(" ");
+            row = Integer.parseInt(inputArray[0]);
+            col = Integer.parseInt(inputArray[1]);
+            if (check(grid[row][col]) == true) {
+                System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") separated by space: " + player.playerSymbol.getPlayerSymbol());
+              //  input = sc.nextLine();
+                input =  inputManger.getUserChoiceString();
+                String[] inputArray2 = input.split(" ");
+                row = Integer.parseInt(inputArray2[0]);
+                col = Integer.parseInt(inputArray2[1]);
+                grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
+            } else {
+                grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
+            }
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input. Please enter a valid row and column separated by space.");{
+            }
+
+        }
     }
+
 
     public boolean check(Symbol y) {
         if (y.getPlayerSymbol() == 'x' || y.getPlayerSymbol() == 'o') {
@@ -77,11 +138,13 @@ public class Board {
         return 'D';
     }
 
-    public boolean isFullOfSymbols() {
+    public boolean isFullOfSymbols(Player player1, Player player2) {
+        char player1Symbol = player1.playerSymbol.getPlayerSymbol();
+        char player2Symbol = player2.playerSymbol.getPlayerSymbol();
         for (int row = 0; row < size; row++) {
             for (int col = 0; col < size; col++) {
                 char symbol = grid[row][col].getPlayerSymbol();
-                if (symbol != 'x' && symbol != 'o') {
+                if (symbol != player1Symbol && symbol != player2Symbol) {
                     return false;
                 }
             }
@@ -89,30 +152,6 @@ public class Board {
         return true;
     }
 
-    public void saveBoardToFile() {
-        Gson gson = new Gson();
-        String json = gson.toJson(grid);
-        try (FileWriter writer = new FileWriter("grid.json")) {
-            writer.write(json);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
 
-    public void readBoardFromFile() {
-        Gson gson = new Gson();
-        try (Reader reader = new FileReader("grid.json")) {
-            Symbol[][] newGrid = gson.fromJson(reader, Symbol[][].class);
-            if (newGrid.length == size) {
-                grid = newGrid;
-            } else {
-                System.out.println("The size of the saved grid does not match the current board size");
-            }
-        } catch (FileNotFoundException e) {
-            System.out.println("The specified file does not exist: " + "grid.json");
-        } catch (IOException e) {
-            System.out.println("An error occurred while reading from the file: " + "grid.json");
-        }
-    }
 }
