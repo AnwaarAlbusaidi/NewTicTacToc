@@ -60,13 +60,12 @@ public class Board {
      If the player enters "q", the game is exited.
      @param player the current player
      */
-    public void putToGrid(Player player) {
+    public void MakeMove(Player player) {
         Scanner sc = new Scanner(System.in);
         String input;
         int row, col;
         System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") separated by space or 'q' to quit: " + player.playerSymbol.getPlayerSymbol());
         input =  inputManger.getUserChoiceString();
-        //input = sc.nextLine();
         if (input.equals("q")) {
             System.out.println("Player " + player.name + " has exited the game");
             System.exit(0);
@@ -77,7 +76,6 @@ public class Board {
             col = Integer.parseInt(inputArray[1]);
             if (check(grid[row][col]) == true) {
                 System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") separated by space: " + player.playerSymbol.getPlayerSymbol());
-              //  input = sc.nextLine();
                 input =  inputManger.getUserChoiceString();
                 String[] inputArray2 = input.split(" ");
                 row = Integer.parseInt(inputArray2[0]);
@@ -93,6 +91,14 @@ public class Board {
         }
     }
 
+    public void BoatMakeMove(Player player) {
+        int row, col;
+        do {
+            row = (int)(Math.random() * size);
+            col = (int)(Math.random() * size);
+        } while (!check(grid[row][col]));
+        grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
+    }
 
     public boolean check(Symbol y) {
         if (y.getPlayerSymbol() == 'x' || y.getPlayerSymbol() == 'o') {

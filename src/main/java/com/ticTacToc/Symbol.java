@@ -27,4 +27,8 @@ public class Symbol {
     public boolean isSameSymbol(Symbol otherSymbol) {
         return this.playerSymbol == otherSymbol.playerSymbol;
     }
+
+    public char getSymbol() {
+        return  playerSymbol;
+    }
 }
