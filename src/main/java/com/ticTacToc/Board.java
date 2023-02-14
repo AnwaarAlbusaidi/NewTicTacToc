@@ -92,11 +92,13 @@ public class Board {
     }
 
     public void BoatMakeMove(Player player) {
+        Scanner sc = new Scanner(System.in);
         int row, col;
+        System.out.println("Player " + player.name + " makes a move: " + player.playerSymbol.getPlayerSymbol());
         do {
             row = (int)(Math.random() * size);
             col = (int)(Math.random() * size);
-        } while (!check(grid[row][col]));
+        } while (check(grid[row][col]) == true);
         grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
     }
 

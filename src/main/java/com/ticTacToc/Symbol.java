@@ -4,6 +4,10 @@ public class Symbol {
 
     char playerSymbol;
 
+    public Symbol(char x) {
+        playerSymbol = x;
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
@@ -24,11 +28,4 @@ public class Symbol {
         this.playerSymbol = playerSymbol;
     }
 
-    public boolean isSameSymbol(Symbol otherSymbol) {
-        return this.playerSymbol == otherSymbol.playerSymbol;
-    }
-
-    public char getSymbol() {
-        return  playerSymbol;
-    }
 }
