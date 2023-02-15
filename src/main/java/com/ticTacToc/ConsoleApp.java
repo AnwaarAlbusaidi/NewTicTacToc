@@ -14,7 +14,7 @@ public class ConsoleApp {
         // Initialize the User Input Handler to check the user input
         UserInputHandler inputManager = new UserInputHandler();
         //Initialize the boat player
-        BoatPlayer boatPlayer = new BoatPlayer(null, null);
+        BotPlayer botPlayer = new BotPlayer(null, null);
         //Initialize the  player1 nd player2
         Player player1 = new Player(null, null);
         Player player2 = new Player(null, null);
@@ -33,19 +33,19 @@ public class ConsoleApp {
             System.out.println("Player name: " + player1.name);
             System.out.println("Player symbol: " + player1.playerSymbol.getPlayerSymbol());
 
-            boatPlayer.setName("Computer");
-            System.out.println("Player name: " + boatPlayer.name);
-            Symbol boatSymbol = boatPlayer.pickSymbol();
-            boatPlayer.setPlayerSymbol(boatSymbol);
-            System.out.println("Player symbol: " + boatPlayer.getSymbol());
+            botPlayer.setName("Computer");
+            System.out.println("Player name: " + botPlayer.name);
+            Symbol boatSymbol = botPlayer.pickSymbol();
+            botPlayer.setPlayerSymbol(boatSymbol);
+            System.out.println("Player symbol: " + botPlayer.getSymbol());
 
             int turn = 1;
             while (playGame == true) {
                 board.displayBoard();
-                Player currentPlayer = (turn % 2 == 1) ? player1 : boatPlayer;
+                Player currentPlayer = (turn % 2 == 1) ? player1 : botPlayer;
                 if (currentPlayer == player1)
                     board.MakeMove(currentPlayer);
-                else if (currentPlayer == boatPlayer)
+                else if (currentPlayer == botPlayer)
                     board.BoatMakeMove(currentPlayer);
                 appManager.saveBoardToFile(board);
                 if (board.hasWinner() == currentPlayer.getSymbol().getPlayerSymbol()) {
@@ -56,8 +56,8 @@ public class ConsoleApp {
                     gameFile.delete();
                     playGame = false;
                 }
-                if (board.isFullOfSymbols(player1, boatPlayer) == true) {
-                    System.out.println("The grid is full of only " + player1.getSymbol().getPlayerSymbol() + "and " + boatPlayer.playerSymbol.getPlayerSymbol() + " symbols. No more moves can be made.");
+                if (board.isFullOfSymbols(player1, botPlayer) == true) {
+                    System.out.println("The grid is full of only " + player1.getSymbol().getPlayerSymbol() + "and " + botPlayer.playerSymbol.getPlayerSymbol() + " symbols. No more moves can be made.");
                     File file = new File("grid.json");
                     file.delete();
                     playGame = false;
