@@ -44,9 +44,9 @@ public class ConsoleApp {
                 board.displayBoard();
                 Player currentPlayer = (turn % 2 == 1) ? player1 : botPlayer;
                 if (currentPlayer == player1)
-                    board.MakeMove(currentPlayer);
+                   currentPlayer.makeMove(board);
                 else if (currentPlayer == botPlayer)
-                    board.BoatMakeMove(currentPlayer);
+                    botPlayer.BotMakeMove(board);
                 appManager.saveBoardToFile(board);
                 if (board.hasWinner() == currentPlayer.getSymbol().getPlayerSymbol()) {
                     System.out.println(currentPlayer.getName() + " is the winner");
@@ -92,7 +92,7 @@ public class ConsoleApp {
             while (playGame == true) {
                 board.displayBoard();
                 Player currentPlayer = (turn % 2 == 1) ? player1 : player2;
-                board.MakeMove(currentPlayer);
+                currentPlayer.makeMove(board);
                 appManager.saveBoardToFile(board);
                 if (board.hasWinner() == currentPlayer.getSymbol().getPlayerSymbol()) {
                     System.out.println(currentPlayer.getName() + " is the winner");

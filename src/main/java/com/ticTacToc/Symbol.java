@@ -1,9 +1,6 @@
 package com.ticTacToc;
 
 public class Symbol {
-
-    char playerSymbol;
-
     public Symbol(char x) {
         playerSymbol = x;
     }
@@ -28,4 +25,5 @@ public class Symbol {
         this.playerSymbol = playerSymbol;
     }
 
+    char playerSymbol;
 }

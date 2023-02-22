@@ -1,20 +1,6 @@
 package com.ticTacToc;
-import java.util.Scanner;
 
 public class Board {
-    /**
-     The grid representing the Tic Tac Toe board.
-     */
-    private Symbol[][] grid;
-    /**
-     The size of the Tic Tac Toe board.
-     */
-    private int size;
-    /**
-     An object of UserInputHandler class to get user input.
-     */
-    UserInputHandler inputManger = new UserInputHandler();
-
     public Board(){
     }
     /**
@@ -25,6 +11,10 @@ public class Board {
     public Board(Symbol[][] grid, int size) {
         this.grid = grid;
         this.size = size;
+    }
+
+    public int getSize() {
+        return size;
     }
     public Symbol[][] getGrid() {
         return grid;
@@ -52,54 +42,6 @@ public class Board {
             }
             System.out.println();
         }
-    }
-    /**
-     The method allows a player to place their symbol on the game grid.
-     The player is prompted to enter the row and column where they want to place their symbol.
-     If the input is invalid or if the chosen location is already occupied, the player is prompted again.
-     If the player enters "q", the game is exited.
-     @param player the current player
-     */
-    public void MakeMove(Player player) {
-        Scanner sc = new Scanner(System.in);
-        String input;
-        int row, col;
-        System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") separated by space or 'q' to quit: " + player.playerSymbol.getPlayerSymbol());
-        input =  inputManger.getUserChoiceString();
-        if (input.equals("q")) {
-            System.out.println("Player " + player.name + " has exited the game");
-            System.exit(0);
-        }
-        try {
-            String[] inputArray = input.split(" ");
-            row = Integer.parseInt(inputArray[0]);
-            col = Integer.parseInt(inputArray[1]);
-            if (check(grid[row][col]) == true) {
-                System.out.println("Player " + player.name + ", enter row and column (0-" + (size - 1) + ") separated by space: " + player.playerSymbol.getPlayerSymbol());
-                input =  inputManger.getUserChoiceString();
-                String[] inputArray2 = input.split(" ");
-                row = Integer.parseInt(inputArray2[0]);
-                col = Integer.parseInt(inputArray2[1]);
-                grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
-            } else {
-                grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
-            }
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Please enter a valid row and column separated by space.");{
-            }
-
-        }
-    }
-
-    public void BoatMakeMove(Player player) {
-        Scanner sc = new Scanner(System.in);
-        int row, col;
-        System.out.println("Player " + player.name + " makes a move: " + player.playerSymbol.getPlayerSymbol());
-        do {
-            row = (int)(Math.random() * size);
-            col = (int)(Math.random() * size);
-        } while (check(grid[row][col]) == true);
-        grid[row][col].setPlayerSymbol(player.playerSymbol.getPlayerSymbol());
     }
 
     public boolean check(Symbol y) {
@@ -155,7 +97,12 @@ public class Board {
         }
         return true;
     }
-
-
-
+    /**
+     The grid representing the Tic Tac Toe board.
+     */
+    Symbol[][] grid;
+    /**
+     The size of the Tic Tac Toe board.
+     */
+    int size;
 }

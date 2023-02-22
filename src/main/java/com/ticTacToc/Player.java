@@ -35,5 +35,35 @@ public class Player {
         return this.playerSymbol;
     }
 
+    public void makeMove(Board board) {
+        String input;
+        int row, col;
+        System.out.println("Player " + this.name + ", enter row and column (0-" + (board.getSize() - 1) + ") separated by space or 'q' to quit: " + this.playerSymbol.getPlayerSymbol());
+        input =  inputManger.getUserChoiceString();
+        if (input.equals("q")) {
+            System.out.println("Player " + this.name + " has exited the game");
+            System.exit(0);
+        }
+            String[] inputArray = input.split(" ");
+            row = Integer.parseInt(inputArray[0]);
+            col = Integer.parseInt(inputArray[1]);
 
+            if (row < 0 || row >= board.getSize() || col < 0 || col >= board.getSize()) {
+                System.out.println("Invalid position! Please enter a position within the range of the board.");
+            } else if (board.check(board.getGrid()[row][col])) {
+                 System.out.println("Player " + this.name + ", enter row and column (0-" + (board.getSize() - 1) + ") separated by space: " + this.playerSymbol.getPlayerSymbol());
+                input =  inputManger.getUserChoiceString();
+                String[] inputArray2 = input.split(" ");
+                row = Integer.parseInt(inputArray2[0]);
+                col = Integer.parseInt(inputArray2[1]);
+                board.getGrid()[row][col].setPlayerSymbol(this.playerSymbol.getPlayerSymbol());
+            } else {
+                board.getGrid()[row][col] = this.playerSymbol;
+            }
+        }
+
+    /**
+     An object of UserInputHandler class to get user input.
+     */
+    UserInputHandler inputManger = new UserInputHandler();
 }
