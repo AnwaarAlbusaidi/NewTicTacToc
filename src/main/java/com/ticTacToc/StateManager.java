@@ -71,4 +71,14 @@ public class StateManager {
         }
         return players;
     }
+
+    public boolean checkJsonFile() {
+        File file = new File("grid.json");
+        // grid.json is empty or doesn't exist
+        if (!file.exists() || file.length() == 0) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

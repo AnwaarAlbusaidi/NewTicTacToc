@@ -1,8 +1,9 @@
 package com.ticTacToc;
 
 public class Symbol {
-
-    char playerSymbol;
+    public Symbol(char x) {
+        playerSymbol = x;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -24,11 +25,5 @@ public class Symbol {
         this.playerSymbol = playerSymbol;
     }
 
-    public boolean isSameSymbol(Symbol otherSymbol) {
-        return this.playerSymbol == otherSymbol.playerSymbol;
-    }
-
-    public char getSymbol() {
-        return  playerSymbol;
-    }
+    char playerSymbol;
 }
